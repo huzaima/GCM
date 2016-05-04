@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,12 +38,9 @@ public class MainActivity extends AppCompatActivity {
                 boolean sentToken = sharedPreferences
                         .getBoolean(Config.SENT_TOKEN_TO_SERVER, false);
                 if (sentToken) {
-                    mInformationTextView.setText(getString(R.string.gcm_send_message));
                     String tok = sharedPreferences.getString("GCM_TOKEN","Not found");
-                    Toast.makeText(getApplicationContext(),
-                            "GCM Token: " + tok,
-                            Toast.LENGTH_LONG).show();
-                    Log.v(MainActivity.class.getName(),"GCM Token: " + tok);
+                    mInformationTextView.setText(getString(R.string.gcm_send_message) + "\nToken: " + tok);
+                    Log.v(MainActivity.class.getSimpleName(), "GCM Token: " + tok);
                 } else {
                     mInformationTextView.setText(getString(R.string.token_error_message));
                 }
@@ -60,20 +56,15 @@ public class MainActivity extends AppCompatActivity {
 
         boolean ex = sharedPreferences.getBoolean(Config.SENT_TOKEN_TO_SERVER,false);
 
-        Toast.makeText(getApplicationContext(),
-                "GCM Token: " + ex,
-                Toast.LENGTH_LONG).show();
         String t = sharedPreferences.getString("GCM_TOKEN","Not found");
-        Toast.makeText(getApplicationContext(),
-                "GCM Token: " + t, Toast.LENGTH_LONG).show();
 
         if (!ex) {
             // Start IntentService to register this application with GCM.
-            Toast.makeText(getApplicationContext(),"Service starting",Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         }
         else {
+            Log.v(MainActivity.class.getSimpleName(), "GCM Token: " + t);
             mInformationTextView.setText(getString(R.string.gcm_registered) + "\nToken: " + t);
             mRegistrationProgressBar.setVisibility(View.GONE);
         }

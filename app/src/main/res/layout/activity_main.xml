@@ -7,6 +7,7 @@
         android:id="@+id/registrationProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:indeterminate="true"
         style="?android:attr/progressBarStyleHorizontal"/>
 
     <TextView
@@ -14,6 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"
+        android:textIsSelectable="true"
         android:text="@string/registering_message"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

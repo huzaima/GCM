@@ -1,12 +1,9 @@
 package com.huzaima.gcmtest;
 
 import android.app.IntentService;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -23,7 +20,7 @@ import java.net.URL;
 
 public class RegistrationIntentService extends IntentService {
 
-    private static final String LOG_TAG = RegistrationIntentService.class.getName();
+    private static final String LOG_TAG = RegistrationIntentService.class.getSimpleName();
 
     public RegistrationIntentService() {
         super(LOG_TAG);
@@ -71,14 +68,6 @@ public class RegistrationIntentService extends IntentService {
             boolean successful = rootObject.getBoolean("successful");
 
             sharedPreferences.edit().putBoolean(Config.SENT_TOKEN_TO_SERVER, successful).apply();
-
-            Context context = getBaseContext();
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                    .setSmallIcon(R.mipmap.ic_launcher).setContentTitle("GCM Registration Status")
-                    .setContentText(String.valueOf(successful));
-            NotificationManager mNotificationManager = (NotificationManager) context
-                    .getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(435345, mBuilder.build());
 
         } catch (IOException e) {
             sharedPreferences.edit().putBoolean(Config.SENT_TOKEN_TO_SERVER, false).apply();

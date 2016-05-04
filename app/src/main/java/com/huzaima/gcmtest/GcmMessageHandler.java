@@ -13,12 +13,19 @@ import com.google.android.gms.gcm.GcmListenerService;
 public class GcmMessageHandler extends GcmListenerService {
 
     public static final int MESSAGE_NOTIFICATION_ID = 435345;
-    private final String LOG_TAG = GcmMessageHandler.class.getName();
+    private final String LOG_TAG = GcmMessageHandler.class.getSimpleName();
+    private Handler handler;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        handler = new Handler();
+    }
 
     @Override
     public void onMessageReceived(final String from, final Bundle data) {
-        Log.v("MessageReceived","sdfs " + from + " " + data.toString());
-        (new Handler()).post(new Runnable() {
+        Log.v(LOG_TAG, "Message Received: " + from + " " + data.toString());
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 Toast.makeText(getApplicationContext(),"Message Received: " + from + " " + data.toString(),

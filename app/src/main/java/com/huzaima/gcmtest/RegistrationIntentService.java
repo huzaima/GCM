@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -51,8 +52,10 @@ public class RegistrationIntentService extends IntentService {
     private void registerDevice(String token) {
         URL url;
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String androidID = Settings.Secure.getString(getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+
         try {
-            url = new URL("http://huziama.5gbfree.com/register.php?token=" + token);
+            url = new URL("http://huziama.5gbfree.com/register.php?token=" + token + "&id=" + androidID);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
